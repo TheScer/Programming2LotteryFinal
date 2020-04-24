@@ -38,6 +38,9 @@ public:
 			//which links the first node to the 2nd node
 
 			tail = temp;//sets the tail to the address of the 2nd node
+
+			cout << "testing, this is number " << x << " of the linked list" << endl;
+			cout << temp->number<<endl;
 		}
 
 		//sets the previous value of the head to the tail 
@@ -48,42 +51,62 @@ public:
 		//now, the tails next value points to the first node or "head"
 	};
 
-	int ChooseOne(Node*& head)
+	int* DrawnPicks(Node*& head)
 	{
 		int travel;
 		Node* final = head;
 		Node* temp = head;
-		travel = (rand() % 1000) + 1;
+		int picks[6];
 
-		if (travel % 2 == 0) {
-			for (int z = 0; z < travel; z++) {
-				temp->next;
-				temp = next;
-			}
-			final = temp;
-			final->number;
-		}
-		else if(travel % 2 == 1) {
-			for (int z = 0; z < travel; z++) {
-				temp->prev;
-				temp = prev;
+		//outer for loop so that it picks the 6 values for the drawn picks
+		for (int a = 0; a < 6;a++) {
 
+			travel = (rand() % 100) + 1; //randomizes the travel distance
+
+
+			//if the travel number is even traverses the list forwards
+			if (travel % 2 == 0) {
+				for (int z = 0; z < travel; z++) {
+					temp->next;
+					temp = next;
+				}
+				final = temp; //makes final pointer = temp pointer
+				final->number; //looks at final pointer -> number to store later
 			}
-			final = temp;
-			final->number;
+			//if the travel number is odd it traverses the list backwards
+			else if (travel % 2 == 1) {
+				for (int z = 0; z < travel; z++) {
+					temp->prev;
+					temp = prev;
+
+				}
+				final = temp;
+				final->number;
+				cout << "final->numbers when odd" << endl;//testing to see what values we're getting
+				cout<<number<<endl; //testing to see what values we're getting
+			}
+			picks[a] = number;
+			cout << "this is picks " << a << endl;//testing to see what values we're getting
+			cout << picks[a]<<endl;//testing to see what values we're getting
 		}
-		return final->number;
+		return picks;
 	}
 };
 
 int main() {
 
 	Node* head = NULL;
-	Node* last = NULL;
-	char choice;
+	Node* tail = NULL;
+	Node Test;
 	int number;
-	Node test;
+	number = 1;
 	int temp;
+	int* draws;
+
+
+	Test.CreateList(head, tail, number);
+	draws = Test.DrawnPicks(head);
+
 
 	//num = (rand() % 40) + 1;
 	//this will return a random number between 1 and 40
@@ -115,6 +138,13 @@ int main() {
 			cout << e << endl;
 		};
 	};
+
+	for (int b = 0; b < 6;b++) {
+		cout << "*(draws + " << b << ") : ";
+		cout << *(draws + b) << endl;
+	}
+	
+
 	return 0;
 };
 
