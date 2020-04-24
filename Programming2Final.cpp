@@ -54,12 +54,11 @@ public:
 
 	};
 
-	int* DrawnPicks(Node*& head)
+	void DrawnPicks(Node*& head, int picks[6])
 	{
 		int travel;
 		Node* final = head;
 		Node* temp = head;
-		int picks[6];
 
 		//outer for loop so that it picks the 6 values for the drawn picks
 		for (int a = 0; a < 6; a++) {
@@ -95,7 +94,6 @@ public:
 			cout << "this is picks " << a << endl;//testing to see what values we're getting
 			cout << picks[a] << endl;//testing to see what values we're getting
 		}
-		return picks;
 	}
 };
 
@@ -107,12 +105,11 @@ int main() {
 	int number;
 	number = 1;
 	int temp;
-	int* draws;
+	int draws[6];
 
 
 	HEAD.CreateList(HEAD, head, tail, number);
-	draws = HEAD.DrawnPicks(head);
-
+	HEAD.DrawnPicks(head, draws);
 
 	//num = (rand() % 40) + 1;
 	//this will return a random number between 1 and 40
@@ -146,8 +143,8 @@ int main() {
 	};
 
 	for (int b = 0; b < 6; b++) {
-		cout << "*(draws + " << b << ") : ";
-		cout << *(draws + b) << endl;
+		cout << "draw "<< b <<" :";
+		cout << *draws << endl;
 	}
 
 
