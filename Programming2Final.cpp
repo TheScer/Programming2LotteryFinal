@@ -54,18 +54,11 @@ public:
 
 	};
 
-	void DrawnPicks(Node*& head, int picks[6])
+	int DrawnPicks(Node*& head, int travel)
 	{
-		int travel;
 		Node* final = head;
 		Node* temp = head;
-
-		//outer for loop so that it picks the 6 values for the drawn picks
-		for (int a = 0; a < 6; a++) {
-
-			travel = (rand() % 100) + 1; //randomizes the travel distance
-
-			cout << travel << endl; //testing what it gives for travel
+		int TempNum = 0;
 
 			//if the travel number is even traverses the list forwards
 			if (travel % 2 == 0) {
@@ -75,6 +68,7 @@ public:
 				}
 				final = temp; //makes final pointer = temp pointer
 				final->number; //looks at final pointer -> number to store later
+				TempNum = final->number;
 				cout << "final->number when travel is even" << endl;//testing to see what values we're getting
 				cout << final->number << endl; //testing to see what values we're getting
 			}
@@ -83,18 +77,14 @@ public:
 				for (int z = 0; z < travel; z++) {
 					temp->prev;
 					temp = temp->prev;
-
 				}
 				final = temp;
-				final->number;
+				TempNum = final->number;
 				cout << "final->number when travel is odd" << endl;//testing to see what values we're getting
 				cout << final->number << endl; //testing to see what values we're getting
 			}
-			picks[a] = final->number;
-			cout << "this is picks " << a << endl;//testing to see what values we're getting
-			cout << picks[a] << endl;//testing to see what values we're getting
+			return TempNum;
 		}
-	}
 };
 
 int main() {
@@ -105,11 +95,16 @@ int main() {
 	int number;
 	number = 1;
 	int temp;
-	int draws[6];
+	int draws[6] = {0,0,0,0,0,0};
 
 
 	HEAD.CreateList(HEAD, head, tail, number);
-	HEAD.DrawnPicks(head, draws);
+
+	for (int a = 0; a < 6; a++) {
+		int travel;
+		travel = (rand() % 100) + 1; //randomizes the travel distance
+		draws[a] = HEAD.DrawnPicks(head, travel);
+	}
 
 	//num = (rand() % 40) + 1;
 	//this will return a random number between 1 and 40
@@ -143,8 +138,8 @@ int main() {
 	};
 
 	for (int b = 0; b < 6; b++) {
-		cout << "draw "<< b <<" :";
-		cout << *draws << endl;
+		cout << "computer draw "<< (b + 1) <<" :";
+		cout << draws[b] << endl;
 	}
 
 
