@@ -137,18 +137,22 @@ int main() {
 
 		try {
 			if (temp < 41 && temp>0) {
+
+				for (int y = 0; y < x; y++) {
+					if (temp == MyNums[y]) {
+						throw "You've already entered that number. Enter another number between 1-40";
+					}
+				}
 				MyNums[x] = temp;
 				cout << endl << endl;
-			}
-			else if (temp == MyNums[0]) {
-				throw "You've already entered that number. Enter another number between 1-40";
 			}
 			else if (temp < 1 || temp>40) {
 				throw "Your number was INVALID, enter another number between 1-40";
 			}
 		}
 		catch (char const* e) {
-			cout << e << endl;
+			x--; //puts x back to the previous value in the for loop so you can redo your input
+			cout << e << endl; //couts whatever error you got
 		};
 	};
 
