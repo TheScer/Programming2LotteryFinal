@@ -1,13 +1,15 @@
 #include <iostream>
 #include <string>
 #include<exception>
+#include<time.h>
+#include<cstdlib>
 using namespace std;
 
 class Node
 {
 private:
 	int number;
-	
+
 
 public:
 	Node* next;
@@ -23,7 +25,7 @@ public:
 		}
 	};
 
-	void CreateList(Node first,Node*& head, Node*& tail, int number)
+	void CreateList(Node first, Node*& head, Node*& tail, int number)
 	{
 		Node* temp = &first;
 		temp->number = number;
@@ -60,31 +62,43 @@ public:
 		Node* temp = head;
 		int TempNum = 0;
 
-			//if the travel number is even traverses the list forwards
-			if (travel % 2 == 0) {
-				for (int z = 0; z < travel; z++) {
-					temp->next;
-					temp = temp->next;
-				}
-				final = temp; //makes final pointer = temp pointer
-				final->number; //looks at final pointer -> number to store later
-				TempNum = final->number;
-				cout << "final->number when travel is even" << endl;//testing to see what values we're getting
-				cout << final->number << endl; //testing to see what values we're getting
+		//if the travel number is even traverses the list forwards
+		if (travel % 2 == 0) {
+			for (int z = 0; z < travel; z++) {
+				temp->next;
+				temp = temp->next;
 			}
-			//if the travel number is odd it traverses the list backwards
-			else if (travel % 2 == 1) {
-				for (int z = 0; z < travel; z++) {
-					temp->prev;
-					temp = temp->prev;
-				}
-				final = temp;
-				TempNum = final->number;
-				cout << "final->number when travel is odd" << endl;//testing to see what values we're getting
-				cout << final->number << endl; //testing to see what values we're getting
-			}
-			return TempNum;
+			cout << "final->number when travel is even" << endl;//testing to see what values we're getting
 		}
+		//if the travel number is odd it traverses the list backwards
+		else if (travel % 2 == 1) {
+			for (int z = 0; z < travel; z++) {
+				temp->prev;
+				temp = temp->prev;
+			}
+			cout << "final->number when travel is odd" << endl;//testing to see what values we're getting
+		}
+
+		final = temp; //makes final pointer = temp pointer
+		final->number; //looks at final pointer -> number to store later
+		TempNum = final->number;
+		cout << " when travel: "<<travel << endl;//testing to see what values we're getting
+		cout << final->number << endl; //testing to see what values we're getting
+
+		head = temp; //resetting the head to the temp value so it traverses from that node
+
+		final->next->prev = final->prev; //change the prev of the next node to the the prev of current node
+		final->prev->next = final->next; //change the next of the previous node to the next of the previous node
+
+		//now that  we changed the pointers of the next and previous node,
+		//the current node still points to the next and prev, but has been removed from the list
+
+		//delete final; 
+		//CANNOT delete the node if I want to start from it next time
+		//this will cause some memory leakage but in this project not much of a problem
+
+		return TempNum;
+	}
 };
 
 int main() {
@@ -95,15 +109,15 @@ int main() {
 	int number;
 	number = 1;
 	int temp;
-	int draws[6] = {0,0,0,0,0,0};
-
+	int draws[6] = {0,0,0,0,0,0 }; //initialize the drawn picks array
+	srand(time(0)); //randomizes the seed for the rand function so its more random
 
 	HEAD.CreateList(HEAD, head, tail, number);
 
 	for (int a = 0; a < 6; a++) {
-		int travel=0;
-		travel = (rand() % 200) + 1; //randomizes the travel distance
-		cout << "travel this amount: " << travel << endl; //more testing to see what travel
+		int travel = 0;
+		travel = (rand() % 100) + 1; //randomizes the travel distance
+		//cout << "travel this amount: " << travel << endl; //more testing to see what travel
 		draws[a] = HEAD.DrawnPicks(head, travel);
 	}
 
@@ -138,12 +152,17 @@ int main() {
 		};
 	};
 
+	//displays all the human picks
 	for (int b = 0; b < 6; b++) {
-		cout << "computer draw "<< (b + 1) <<" :";
-		cout << draws[b] << endl;
+		cout << "human picks " << (b + 1) << " :";
+		cout << MyNums[b] << endl;
 	}
 
-
+	//displays all the computer draws
+	for (int b = 0; b < 6; b++) {
+		cout << "computer draw " << (b + 1) << " :";
+		cout << draws[b] << endl;
+	}
 	return 0;
 };
 
