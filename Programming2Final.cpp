@@ -101,8 +101,9 @@ int main() {
 	HEAD.CreateList(HEAD, head, tail, number);
 
 	for (int a = 0; a < 6; a++) {
-		int travel;
-		travel = (rand() % 100) + 1; //randomizes the travel distance
+		int travel=0;
+		travel = (rand() % 200) + 1; //randomizes the travel distance
+		cout << "travel this amount: " << travel << endl; //more testing to see what travel
 		draws[a] = HEAD.DrawnPicks(head, travel);
 	}
 
